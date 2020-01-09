@@ -6,27 +6,102 @@
 /*   By: khakala <khakala@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 11:24:46 by khakala           #+#    #+#             */
-/*   Updated: 2019/12/18 14:43:58 by khakala          ###   ########.fr       */
+/*   Updated: 2020/01/09 17:17:41 by khakala          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "mlx.h"
 
-int     main(int ac, char **av)
+int     main()
 {
-    t_map *map;
+    void    *mlx_ptr;
+    void    *win_ptr;
 
-    map = NULL;
-    if (ac == 2)
+    mlx_ptr = mlx_init();
+    win_ptr = mlx_new_window(mlx_ptr, 1280, 960, "FdF khakala");
+    mlx_pixel_put(mlx_ptr, win_ptr, 200, 500, 0x0000FF00);
+    draw_rectangle1(mlx_ptr, win_ptr);
+    draw_rectangle2(mlx_ptr, win_ptr);
+    draw_line1(mlx_ptr, win_ptr);
+    draw_line2(mlx_ptr, win_ptr);
+    draw_kuvio(mlx_ptr, win_ptr);
+    mlx_string_put(mlx_ptr, win_ptr, 600, 300, 0xC0, "FdF Khakala");
+    mlx_loop(mlx_ptr);
+}
+
+int     draw_rectangle1(void *mlx_ptr, void *win_ptr)
+{
+    int x;
+    int y;
+
+    x = 500;
+    y = 290;
+    while (x < 800)
     {
-        //if (!((fd = open(av[1], O_RDONLY)) >= 0))
-            //ft_error(ERR_OPENING_FILE);
-        if (!(map = (t_map *)malloc(sizeof(t_map))))
-            ft_error(ERR_MALLOCING_MAP);
-        if (!(read_map(av[1], map)))
-            ft_error(ERR_READING_FILE);
+        mlx_pixel_put(mlx_ptr, win_ptr, x, y, 0x0000FF00);
+        x++;
     }
-    ft_error(ERR_ARGS);
     return (0);
+}
 
+int     draw_rectangle2(void *mlx_ptr, void *win_ptr)
+{
+    int x;
+    int y;
+
+    x = 500;
+    y = 330;
+    while (x < 800)
+    {
+        mlx_pixel_put(mlx_ptr, win_ptr, x, y, 0x0000FF00);
+        x++;
+    }
+    return (0);
+}
+
+int     draw_line1(void *mlx_ptr, void *win_ptr)
+{
+    int x;
+    int y;
+
+    x = 500;
+    y = 290;
+    while (y < 331)
+    {
+        mlx_pixel_put(mlx_ptr, win_ptr, x, y, 0x0000FF00);
+        y++;
+    }
+    return (0);
+}
+
+int     draw_line2(void *mlx_ptr, void *win_ptr)
+{
+    int x;
+    int y;
+
+    x = 800;
+    y = 290;
+    while (y < 331)
+    {
+        mlx_pixel_put(mlx_ptr, win_ptr, x, y, 0x0000FF00);
+        y++;
+    }
+    return (0);
+}
+
+int     draw_kuvio(void *mlx_ptr, void *win_ptr)
+{
+    int x;
+    int y;
+
+    x = 0;
+    y = 0;
+    while (y < 980 || x < 1280)
+    {
+        if (y % 2 == 0 || x % 2 == 0)
+            mlx_pixel_put(mlx_ptr, win_ptr, x, y, 0x0000FF00);
+        y++;
+        x++;
+    }
+    return (0);
 }
