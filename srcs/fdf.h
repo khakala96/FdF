@@ -5,43 +5,48 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: khakala <khakala@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/17 18:50:47 by khakala           #+#    #+#             */
-/*   Updated: 2019/12/18 15:48:31 by khakala          ###   ########.fr       */
+/*   Created: 2020/01/14 11:55:53 by khakala           #+#    #+#             */
+/*   Updated: 2020/01/15 15:21:14 by khakala          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
-# define SIZE 100
 
-#include <stdlib.h>
-#include <fcntl.h>
-#include "errors.h"
-#include "../Libft/libft.h"
-#include "stdio.h" // remove when done
+# include "../libft/libft.h"
+# include "../minilibx/mlx.h"
+# include <fcntl.h>
+# include <stdio.h> // remove when done
+# include <stdlib.h>
+# include <unistd.h>
 
-typedef struct      s_coords
+typedef struct      s_fdf
 {
-    int             x;
-    int             y;
-    int             z;
     int             width;
     int             height;
-}                   t_coords;
+    int             **z_matrix;
+    int             zoom;
+    int             color;
+    int             shift_x;
+    int             shift_y;
+    int             shift_z;
+    void            *mlx_ptr;
+    void            *win_ptr;
+    float           cos_angle;
+    float           sin_angle;
+}                   t_fdf;
 
-typedef struct      s_map
-{
-    int             height;
-    int             width;
-    int             z_min;
-    int             z_max;
-}                   t_map;
+void                read_map(char *file_name, t_fdf *data);
 
-int     ft_error(char *s);
+void                fill_matrix(int *z_line, char *line);
 
-int     read_map(char *av, t_map *map);
+int                 get_width(char *file_name);
 
-int		get_next_line(const int fd, char **line);
+int                 get_height(char *file_name);
+
+void                bresenham(float x, float y, float x1, float y1, t_fdf *data);
+void                draw(t_fdf *data);
+
+int                 change_angle(int key, t_fdf *data);
 
 #endif
-

@@ -5,103 +5,57 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: khakala <khakala@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/18 11:24:46 by khakala           #+#    #+#             */
-/*   Updated: 2020/01/09 17:17:41 by khakala          ###   ########.fr       */
+/*   Created: 2020/01/14 11:54:26 by khakala           #+#    #+#             */
+/*   Updated: 2020/01/15 15:48:45 by khakala          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mlx.h"
+#include "fdf.h"
 
-int     main()
+int     deal_key(int key, t_fdf *data)
 {
-    void    *mlx_ptr;
-    void    *win_ptr;
-
-    mlx_ptr = mlx_init();
-    win_ptr = mlx_new_window(mlx_ptr, 1280, 960, "FdF khakala");
-    mlx_pixel_put(mlx_ptr, win_ptr, 200, 500, 0x0000FF00);
-    draw_rectangle1(mlx_ptr, win_ptr);
-    draw_rectangle2(mlx_ptr, win_ptr);
-    draw_line1(mlx_ptr, win_ptr);
-    draw_line2(mlx_ptr, win_ptr);
-    draw_kuvio(mlx_ptr, win_ptr);
-    mlx_string_put(mlx_ptr, win_ptr, 600, 300, 0xC0, "FdF Khakala");
-    mlx_loop(mlx_ptr);
-}
-
-int     draw_rectangle1(void *mlx_ptr, void *win_ptr)
-{
-    int x;
-    int y;
-
-    x = 500;
-    y = 290;
-    while (x < 800)
+    printf("%d\n", key);
+     if (key == 2)
+        data->cos_angle += 0.1;
+    if (key == 1)
+        data->sin_angle += 0.1;
+    if (key == 0)
+        data->cos_angle -= 0.1;
+    if (key == 13)
+        data->sin_angle -= 0.1;    
+    if (key == 69)
+        data->zoom += 5;
+    if (key == 78)
+        data->zoom -= 5;
+    if (key == 126)
+        data->shift_y -= 50;
+    if (key == 125)
+        data->shift_y += 50;
+    if (key == 123)
+        data->shift_x -= 50;
+    if (key == 124)
+        data->shift_x += 50;
+    if (key == 53)
     {
-        mlx_pixel_put(mlx_ptr, win_ptr, x, y, 0x0000FF00);
-        x++;
+        mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+        exit(-1);
     }
+    mlx_clear_window(data->mlx_ptr, data->win_ptr);
+    draw(data);
     return (0);
 }
 
-int     draw_rectangle2(void *mlx_ptr, void *win_ptr)
+int     main(int argc, char **argv)
 {
-    int x;
-    int y;
+    t_fdf *data;
 
-    x = 500;
-    y = 330;
-    while (x < 800)
-    {
-        mlx_pixel_put(mlx_ptr, win_ptr, x, y, 0x0000FF00);
-        x++;
-    }
-    return (0);
-}
+    data = (t_fdf*)malloc(sizeof(t_fdf));
+    read_map(argv[1], data);
+    data->mlx_ptr = mlx_init();
+    data->win_ptr = mlx_new_window(data->mlx_ptr, 1920, 1080, "FdF");
+    data->zoom = 20;
+    draw(data);
+    mlx_key_hook(data->win_ptr, deal_key, data);
+    mlx_loop(data->mlx_ptr);
 
-int     draw_line1(void *mlx_ptr, void *win_ptr)
-{
-    int x;
-    int y;
-
-    x = 500;
-    y = 290;
-    while (y < 331)
-    {
-        mlx_pixel_put(mlx_ptr, win_ptr, x, y, 0x0000FF00);
-        y++;
-    }
-    return (0);
-}
-
-int     draw_line2(void *mlx_ptr, void *win_ptr)
-{
-    int x;
-    int y;
-
-    x = 800;
-    y = 290;
-    while (y < 331)
-    {
-        mlx_pixel_put(mlx_ptr, win_ptr, x, y, 0x0000FF00);
-        y++;
-    }
-    return (0);
-}
-
-int     draw_kuvio(void *mlx_ptr, void *win_ptr)
-{
-    int x;
-    int y;
-
-    x = 0;
-    y = 0;
-    while (y < 980 || x < 1280)
-    {
-        if (y % 2 == 0 || x % 2 == 0)
-            mlx_pixel_put(mlx_ptr, win_ptr, x, y, 0x0000FF00);
-        y++;
-        x++;
-    }
-    return (0);
 }
