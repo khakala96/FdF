@@ -1,34 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: khakala <khakala@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/14 11:54:26 by khakala           #+#    #+#             */
-/*   Updated: 2020/01/28 16:03:48 by khakala          ###   ########.fr       */
+/*   Created: 2019/10/16 13:48:18 by khakala           #+#    #+#             */
+/*   Updated: 2019/10/30 10:48:41 by khakala          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "libft.h"
 
-int		main(int argc, char **argv)
+char	*ft_strstr(const char *haystack, const char *needle)
 {
-	t_fdf *data;
+	unsigned int pos;
+	unsigned int n;
 
-	if (argc != 2)
+	if (!*needle)
+		return ((char*)haystack);
+	pos = 0;
+	while (haystack[pos] != '\0')
 	{
-		ft_putendl("FdF invalid arguments");
-		exit(-1);
+		if (haystack[pos] == needle[0])
+		{
+			n = 1;
+			while (needle[n] != '\0' && haystack[pos + n] == needle[n])
+				++n;
+			if (needle[n] == '\0')
+				return ((char*)&haystack[pos]);
+		}
+		++pos;
 	}
-	data = (t_fdf*)malloc(sizeof(t_fdf));
-	read_map(argv[1], data);
-	data->mlx_ptr = mlx_init();
-	data->win_ptr = mlx_new_window(data->mlx_ptr, 1920, 1080, "FdF");
-	restore_defaults(data);
-	draw(data);
-	print_menu(data);
-	mlx_key_hook(data->win_ptr, deal_key, data);
-	mlx_loop(data->mlx_ptr);
 	return (0);
 }

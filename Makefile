@@ -6,17 +6,17 @@
 #    By: khakala <khakala@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/03 16:11:53 by khakala           #+#    #+#              #
-#    Updated: 2019/12/18 13:54:07 by khakala          ###   ########.fr        #
+#    Updated: 2020/01/28 15:44:53 by khakala          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fdf
 
-SRCS = libft/libft.a srcs/main.c srcs/error.c srcs/read_map.c
+SRCS = libft/libft.a srcs/main.c srcs/draw.c srcs/read_map.c srcs/key_bindings.c
 
 OBJ = $(SRC:.c=.o)
 
-CCFL = gcc -g -Wall -Wextra -Werror
+CCFL = gcc -g -Wall -Wextra -Werror -I /usr/local/include/ -L /usr/local/lib -lmlx -framework OpenGL -framework AppKit
 
 LIBFT = libft/
 
