@@ -5,6 +5,10 @@ In FdF we learn to create a graphic window and draw inside of it. The program ta
 ### How to use
 ````
 $> make
-$> ./fdf 42.fdf
+$> ./fdf test_maps/42.fdf
 ````
 ![Alt Text](https://github.com/khakala96/FdF/blob/master/pictures/42.png)
+````
+>$ ./fdf test_maps/pylone.fdf
+````
+![Alt Text](https://github.com/khakala96/FdF/blob/master/pictures/Pylone.png)
