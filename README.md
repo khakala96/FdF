@@ -7,4 +7,4 @@ In FdF we learn to create a graphic window and draw inside of it. The program ta
 $> make
 $> ./fdf 42.fdf
 ````
-
+![Alt Text](https://github.com/khakala96/FdF/blob/master/pictures/42.png)
